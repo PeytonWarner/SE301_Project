@@ -23,8 +23,9 @@ st.write('2. Filter by metric')
 
 user_input = int(st.text_input('Please input a number corresponding to any of the options below'))
 
+# where the blood, sweat, and tears begins
 
-
+# Filter by country
 if user_input == 1:
 
     country_dict = {}
@@ -49,8 +50,39 @@ if user_input == 1:
     st.write(f'Government Corruption: {df.iloc[country_dict[country_choice],6]}')
     st.write(f'Generosity: {df.iloc[country_dict[country_choice],7]}')
 
+# Filter by metric
 if user_input == 2:
-    pass
+    st.write('1. Happiness Score')
+    st.write('2. GDPPC')
+    st.write('3. Social Support')
+    st.write('4. Life Expectancy')
+    st.write('5. Freedom')
+    st.write('6. Government Corruption')
+    st.write('7. Generosity')
+
+    column_headers = df_without_duplicates.columns.tolist()
+
+    test = st.text_input('please select a metric: ')
+
+    test = int(test)
+    # Select the column from DataFrame
+    selected_column = df_without_duplicates.iloc[:, test]
+    
+    # Concatenate the country names with the corresponding column values
+    result = pd.concat([df_without_duplicates['Country'], selected_column], axis=1)
+    # sorted_df = df.sort_values(by='Country')
+    sorted_result = result.sort_values(by=column_headers[test],ascending=False)
+    sorted_result.reset_index(drop=True, inplace=True)
+
+    #st.write(result)
+    st.write("The top five countries:")
+    st.write(sorted_result.head())
+
+    st.write("The bottom five countries:")
+    st.write(sorted_result.tail())
+    
+
+
 
 # st.write('Thank you for using the country!')
 
