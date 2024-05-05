@@ -1,0 +1,85 @@
+import streamlit as st
+import pandas as pd
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+import statistics
+import random
+
+st.write("Please import file: 'country_data.csv'")
+
+uploaded_file = st.file_uploader("Upload a CSV file", type=["csv"]) 
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+    sorted_df = df.sort_values(by='Country')
+    df_without_duplicates = sorted_df.drop_duplicates(subset=['Country'])
+    
+
+st.set_option('deprecation.showPyplotGlobalUse', False)
+
+
+happiness = df_without_duplicates.sort_values('HappinessScore', ascending=True)
+plt.xlabel('Countries')
+plt.ylabel('Happiness Score')
+plt.title('Country vs. Happiness Score')
+plt.grid(True)
+plt.scatter(happiness['Country'], happiness['HappinessScore'], marker='o', color='b', label='Data', s=10)
+stride = 12
+plt.xticks(happiness['Country'][::stride])
+plt.xticks(rotation=75)
+st.pyplot()
+
+gdppc = df_without_duplicates.sort_values('GDPPC', ascending=True)
+plt.xlabel('Countries')
+plt.ylabel('GDPPC')
+plt.title('Country vs. GDPPC')
+plt.grid(True)
+plt.scatter(gdppc['Country'], gdppc['GDPPC'], marker='o', color='b', label='Data', s=10)
+stride = 17
+plt.xticks(gdppc['Country'][::stride])
+plt.xticks(rotation=75)
+st.pyplot()
+
+socialSupport = df_without_duplicates.sort_values('SocialSupport', ascending=True)
+plt.xlabel('Countries')
+plt.ylabel('Social Support')
+plt.title('Country vs. Social Support')
+plt.grid(True)
+plt.scatter(socialSupport['Country'], socialSupport['SocialSupport'], marker='o', color='b', label='Data', s=10)
+stride = 12
+plt.xticks(socialSupport['Country'][::stride])
+plt.xticks(rotation=75)
+st.pyplot()
+
+lF = df_without_duplicates.sort_values('LifeExpectancy', ascending=True)
+plt.xlabel('Countries')
+plt.ylabel('LifeExpectancy')
+plt.title('Country vs. LifeExpectancy')
+plt.grid(True)
+plt.scatter(lF['Country'], lF['LifeExpectancy'], marker='o', color='b', label='Data', s=10)
+stride = 12
+plt.xticks(lF['Country'][::stride])
+plt.xticks(rotation=75)
+st.pyplot()
+
+lF = df_without_duplicates.sort_values('GovernmentCorruption', ascending=True)
+plt.xlabel('Countries')
+plt.ylabel('GovernmentCorruption')
+plt.title('Country vs. GovernmentCorruption')
+plt.grid(True)
+plt.scatter(lF['Country'], lF['GovernmentCorruption'], marker='o', color='b', label='Data', s=10)
+stride = 12
+plt.xticks(lF['Country'][::stride])
+plt.xticks(rotation=75)
+st.pyplot()
+
+lF = df_without_duplicates.sort_values('Generosity', ascending=True)
+plt.xlabel('Countries')
+plt.ylabel('Generosity')
+plt.title('Country vs. Generosity')
+plt.grid(True)
+plt.scatter(lF['Country'], lF['Generosity'], marker='o', color='b', label='Data', s=10)
+stride = 12
+plt.xticks(lF['Country'][::stride])
+plt.xticks(rotation=75)
+st.pyplot()
