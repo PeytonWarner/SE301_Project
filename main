@@ -14,21 +14,43 @@ st.write("Please import file: 'country_data.csv'")
 uploaded_file = st.file_uploader("Upload a CSV file", type=["csv"]) 
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
-    st.write(df)
+    sorted_df = df.sort_values(by='Country')
+    df_without_duplicates = sorted_df.drop_duplicates(subset=['Country'])
+    st.write(df_without_duplicates)
 
 st.write('1. Filter by country')
 st.write('2. Filter by metric')
 
-user_input = st.text_input('Please input a number corresponding to any of the options below')
+user_input = int(st.text_input('Please input a number corresponding to any of the options below'))
 
-st.write(user_input)
 
-# if user_input == 1:
-#     for index, row in df.iterrows():
-#         st.write(row['Country'])
 
-# if user_input == 2:
-#     pass
+if user_input == 1:
+
+    country_dict = {}
+    row_num = 0
+
+    for index, row in df_without_duplicates.iterrows():
+        st.write(row['Country'])
+
+        country_dict[row['Country']] = row_num
+        row_num += 1
+
+    country_choice = st.text_input('Please pick a country:')
+
+    temp = country_dict[country_choice]
+
+    st.write(f'Chosen country: {country_choice}')
+    st.write(f'Happiness Score: {df.iloc[country_dict[country_choice],1]}')
+    st.write(f'GDPPC: {df.iloc[country_dict[country_choice],2]}')
+    st.write(f'Social Support: {df.iloc[country_dict[country_choice],3]}')
+    st.write(f'Life Expectancy: {df.iloc[country_dict[country_choice],4]}')
+    st.write(f'Freedom: {df.iloc[country_dict[country_choice],5]}')
+    st.write(f'Government Corruption: {df.iloc[country_dict[country_choice],6]}')
+    st.write(f'Generosity: {df.iloc[country_dict[country_choice],7]}')
+
+if user_input == 2:
+    pass
 
 # st.write('Thank you for using the country!')
 
